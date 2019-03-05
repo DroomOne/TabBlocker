@@ -1,0 +1,9 @@
+Package: com.droomone.tabblocker
+Name: TabBlocker
+Depends: mobilesubstrate, ws.hbang.common
+Version: 1.2
+Architecture: iphoneos-arm
+Description: Blocking new advertisement tabs & more
+Maintainer: DroomOne
+Author: DroomOne
+Section: Tweaks

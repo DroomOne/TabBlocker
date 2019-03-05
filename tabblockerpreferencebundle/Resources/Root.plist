@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>Title</key>
+			<string>URL's to filter</string>
+			<key>label</key>
+			<string>Blacklisted URL's (splitted by ;)</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>defaults</key>
+			<string>com.droomone.tabblocker</string>
+			<key>detail</key>
+			<string>PSDetailController</string> 
+			<key>placeholder</key>
+			<string>http://</string>
+			<key>key</key>
+			<string>blacklisturl</string> 
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>Title</key>
+			<string>Domains's to filter</string>
+			<key>label</key>
+			<string>Blacklisted Domains (splitted by ;)</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>defaults</key>
+			<string>com.droomone.tabblocker</string>
+			<key>detail</key>
+			<string>PSDetailController</string> 
+			<key>placeholder</key>
+			<string>http://</string>
+			<key>key</key>
+			<string>blacklistdomain</string> 
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>Title</key>
+			<string>URL's to filter</string>
+			<key>label</key>
+			<string>Whitelisted Domains's (splitted by ;)</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>defaults</key>
+			<string>com.droomone.tabblocker</string>
+			<key>detail</key>
+			<string>PSDetailController</string> 
+			<key>placeholder</key>
+			<string>http://</string>
+			<key>key</key>
+			<string>whitelistdomain</string> 
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string> 
+			<key>label</key>
+			<string>Settings</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.droomone.tabblocker</string>
+			<key>key</key>
+			<string>nodialog</string>
+			<key>label</key>
+			<string>Disable Menu</string> 
+		</dict> 
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.droomone.tabblocker</string>
+			<key>key</key>
+			<string>animation</string>
+			<key>label</key>
+			<string>Disable Tab Animation</string> 
+		</dict> 
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string> 
+			<key>label</key>
+			<string>Made by DroomOne - /u/Droom0ne</string>
+		</dict> 
+	</array>
+	<key>title</key>
+	<string>Tab Blocker</string>
+</dict>
+</plist>
