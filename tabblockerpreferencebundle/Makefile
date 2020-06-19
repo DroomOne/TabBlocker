@@ -1,4 +1,5 @@
 include $(THEOS)/makefiles/common.mk
+ARCHS= armv7 arm64 arm64e
 
 BUNDLE_NAME = TabBlockerPreferenceBundle
 TabBlockerPreferenceBundle_FILES = XXXRootListController.m

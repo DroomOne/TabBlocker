@@ -1,6 +1,42 @@
 #import "CustomMenu.h"
 #import <Cephei/HBPreferences.h>
 
+
+//needed to compile without iOS 13 SDK
+typedef enum UISceneActivationState : NSInteger {
+    UISceneActivationStateUnattached = -1,
+    UISceneActivationStateForegroundActive,
+    UISceneActivationStateForegroundInactive,
+    UISceneActivationStateBackground
+} UISceneActivationState;
+
+@interface UIScene : NSObject
+@property(nonatomic, readonly) UISceneActivationState activationState;
+@end
+
+@interface UIApplication ()
+-(id)connectedScenes;
+@end
+
+@interface UIWindowScene : UIScene
+@end
+
+@interface UIWindow ()
+@property(nonatomic, weak) UIWindowScene *windowScene;
+@end
+
+
+
+// custom view controller to disable landscape rotation of subviews on iOS 13
+@interface CustomMenuViewController : UIViewController
+@end
+@implementation CustomMenuViewController
+-(BOOL)shouldAutorotate{
+    return NO;
+}
+@end
+
+
 @implementation CustomMenu
 
 -(id)init { 
@@ -10,7 +46,7 @@
     if (self) {
         CGRect menuLocation = [self frame];
 
-        controller = [[UIViewController alloc] init];
+        controller = [[CustomMenuViewController alloc] init]; //use our own ViewController
         [self setRootViewController:controller];
         [self setWindowLevel:9998];
         [self setBackgroundColor:[UIColor whiteColor]];
@@ -26,11 +62,13 @@
         [segment insertSegmentWithTitle:@"Block URL" atIndex:1 animated:NO];
         [segment insertSegmentWithTitle:@"Block Domain" atIndex:2 animated:NO];
         [segment addTarget:self action:@selector(onButtonTab:) forControlEvents:UIControlEventValueChanged];
+        [[UISegmentedControl appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]} forState:UIControlStateNormal]; // better readable on iOS 13
 
         infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, menuLocation.size.height - 70, menuLocation.size.width - 30, 30)];
         [infoLabel setText:@"This webpage wants to open a new tab..."];
         [infoLabel setTextAlignment:NSTextAlignmentCenter];
         [infoLabel setAdjustsFontSizeToFitWidth:YES];
+        infoLabel.textColor = [UIColor blackColor];// to make it readable on iOS 13
         [self addSubview:segment];
         [self addSubview:infoLabel];
 
@@ -46,6 +84,20 @@
 
 -(void)showMenu:(NSString *)cleanURL domain:(NSString*)cleanDomain{ 
     [self setHidden:NO]; 
+
+    //on iOS 13 UIWindows need a  UIWindowScene to show https://stackoverflow.com/questions/57134259/how-to-resolve-keywindow-was-deprecated-in-ios-13-0
+    if(kCFCoreFoundationVersionNumber >= 1665.15) {
+        if(!self.windowScene || self.windowScene.activationState != UISceneActivationStateForegroundActive) {
+            NSSet *connectedScenes = [UIApplication sharedApplication].connectedScenes;
+            for(UIScene *scene in connectedScenes) {
+               if(scene.activationState == UISceneActivationStateForegroundActive && [scene isKindOfClass:[NSClassFromString(@"UIWindowScene") class]]) {
+                   self.windowScene = (UIWindowScene *)scene;
+                   break;
+                }
+            }
+        }
+    }
+
     url = [[NSString alloc] initWithString:cleanURL];
     domain = [[NSString alloc] initWithString:cleanDomain];
 } 
@@ -78,5 +130,7 @@
         [self hideMenu];
     }
 }
+
+
 
 @end
