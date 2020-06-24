@@ -21,7 +21,8 @@ static bool nodialog;
 static id tabController;
 
 @interface TabDocument
-- (NSString *)URLString; 
+-(NSString *)URLString;
+-(NSURL *)cachedCanonicalURLOrURLForSharing;
 @end
 
 @interface TabController
@@ -56,7 +57,10 @@ void updatePrefs(){
     tabController = self; 
     
     if ([originalTab URLString]){
-        NSURL * originURL = [[NSURL alloc] initWithString:[originalTab URLString]]; 
+
+        //used to get correctly formatted NSURL; so it's not nil if it contains special characters
+        //Not tested on iOS 11
+        NSURL * originURL = [originalTab cachedCanonicalURLOrURLForSharing];
 
         // Cleaning URL from safari! 
         NSString * cleanDomain = [[originURL host] stringByReplacingOccurrencesOfString:@"www." withString:@""]; 
@@ -116,9 +120,10 @@ void updatePrefs(){
     TabDocument *originalTab = [arg1 parentTabDocumentForBackClosesSpawnedTab];
     tabController = self;
 
-
     if ([originalTab URLString]){
-        NSURL * originURL = [[NSURL alloc] initWithString:[originalTab URLString]];
+
+        //used to get correctly formatted NSURL; so it's not nil if it contains special characters
+        NSURL * originURL = [originalTab cachedCanonicalURLOrURLForSharing];
 
         // Cleaning URL from safari!
         NSString * cleanDomain = [[originURL host] stringByReplacingOccurrencesOfString:@"www." withString:@""];
